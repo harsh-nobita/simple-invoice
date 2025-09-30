@@ -2,124 +2,88 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Invoice Generator</title>
+  <title>HNS Invoice Generator</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
 
-    <!-- Invoice Form -->
     <form id="invoiceForm">
-      <h2>Invoice Form</h2>
+      <h2>HNS Invoice Generator</h2>
 
-      <label>Invoice Number: <input type="text" id="invoiceNumber" placeholder="Enter invoice number" required></label>
-      <label>Invoice Date: <input type="date" id="invoiceDate" required></label>
-      <label>Due Date: <input type="date" id="dueDate"></label>
-      <label>Payment Terms: <input type="text" id="paymentTerms" placeholder="e.g. Net 30"></label>
-      <label>Currency:
-        <select id="currency">
-          <option value="INR">INR (₹)</option>
-          <option value="USD">USD ($)</option>
-          <option value="EUR">EUR (€)</option>
-        </select>
-      </label>
+      <!-- Invoice Info -->
+      <section>
+        <h3>Invoice Info</h3>
+        <div class="row">
+          <label><span>Invoice Number:</span> <input type="text" id="invoiceNumber"></label>
+          <label><span>Invoice Date:</span> <input type="date" id="invoiceDate"></label>
+          <label><span>Due Date:</span> <input type="date" id="dueDate"></label>
+          <label><span>Payment Terms:</span> <input type="text" id="paymentTerms"></label>
+          <label><span>Currency:</span>
+            <select id="currency">
+              <option value="INR">INR (₹)</option>
+              <option value="USD">USD ($)</option>
+              <option value="EUR">EUR (€)</option>
+            </select>
+          </label>
+        </div>
+      </section>
 
-      <label>From: <textarea id="fromDetails" placeholder="Your company details" required></textarea></label>
-      <label>Bill To: <textarea id="billToDetails" placeholder="Client details" required></textarea></label>
+      <!-- Parties Info -->
+      <section>
+        <h3>Parties Info</h3>
+        <label><span>From:</span> <textarea id="fromDetails" placeholder="Your company details"></textarea></label>
+        <label><span>Bill To:</span> <textarea id="billToDetails" placeholder="Client details"></textarea></label>
+      </section>
 
-      <label>Payment Method:
-        <select id="paymentMethod">
-          <option value="Bank Transfer">Bank Transfer</option>
-          <option value="UPI">UPI</option>
-          <option value="Credit Card">Credit Card</option>
-        </select>
-      </label>
-      <label id="bankLabel">Bank Details: <textarea id="bankDetails" placeholder="Bank account info"></textarea></label>
+      <!-- Payment & Taxes -->
+      <section>
+        <h3>Payment & Taxes</h3>
+        <div class="row">
+          <label><span>Payment Method:</span>
+            <select id="paymentMethod">
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="UPI">UPI</option>
+              <option value="Credit Card">Credit Card</option>
+            </select>
+          </label>
+          <label><span>Bank Details:</span> <textarea id="bankDetails" placeholder="Optional"></textarea></label>
+          <label><span>GST % (INR only):</span> <input type="number" id="gstPercent" value="18" min="0"></label>
+          <label><span>Custom Tax %:</span> <input type="number" id="taxPercent" value="0" min="0"></label>
+          <label><span>Shipping:</span> <input type="number" id="shipping" value="0" min="0"></label>
+        </div>
+      </section>
 
-      <label>Tax Percent: <input type="number" id="taxPercent" value="0" min="0"></label>
-      <label>Shipping: <input type="number" id="shipping" value="0" min="0"></label>
+      <!-- Notes & Logo -->
+      <section>
+        <h3>Notes, Terms & Logo</h3>
+        <label><span>Notes:</span> <textarea id="notes"></textarea></label>
+        <label><span>Terms:</span> <textarea id="terms"></textarea></label>
+        <label><span>Upload Logo:</span> <input type="file" id="logoUpload" accept="image/*"></label>
+      </section>
 
-      <label>Notes: <textarea id="notes" placeholder="Additional notes"></textarea></label>
-      <label>Terms: <textarea id="terms" placeholder="Invoice terms"></textarea></label>
-
-      <label>Upload Logo: <input type="file" id="logoUpload" accept="image/*"></label>
-
-      <!-- Items Table Form -->
-      <h3>Invoice Items</h3>
-      <div class="table-container">
+      <!-- Invoice Items -->
+      <section>
+        <h3>Invoice Items</h3>
         <table id="itemsTableForm">
           <thead>
             <tr>
-              <th>Description</th><th>Qty</th><th>Price</th><th>Discount</th><th>Total</th><th>Action</th>
+              <th>Description</th><th>Qty</th><th>Price</th><th>Discount %</th><th>Total</th><th>Action</th>
             </tr>
           </thead>
           <tbody id="itemsBody"></tbody>
         </table>
-      </div>
-      <button type="button" onclick="addItem()">+ Add Item</button>
+        <button type="button" onclick="addItem()">+ Add Item</button>
+      </section>
 
       <button type="button" onclick="saveInvoice()">Save Invoice</button>
     </form>
 
-    <!-- Invoice Preview -->
-    <div id="invoicePreview" class="invoice">
-      <div class="invoice-header">
-        <img id="previewLogo" class="logo" alt="Logo" style="display:none;">
-        <h1>Invoice</h1>
-      </div>
-
-      <div class="invoice-meta">
-        <p><strong>Invoice #:</strong> <span id="previewNumber"></span></p>
-        <p><strong>Date:</strong> <span id="previewDate"></span></p>
-        <p><strong>Due:</strong> <span id="previewDue"></span></p>
-        <p><strong>Terms:</strong> <span id="previewTerms"></span></p>
-        <p><strong>Currency:</strong> <span id="previewCurrency"></span></p>
-      </div>
-
-      <div class="invoice-parties">
-        <div>
-          <h3>From</h3>
-          <p id="previewFrom"></p>
-        </div>
-        <div>
-          <h3>Bill To</h3>
-          <p id="previewBillTo"></p>
-        </div>
-      </div>
-
-      <div class="invoice-items">
-        <h3>Items</h3>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Description</th><th>Qty</th><th>Price</th><th>Discount</th><th>Total</th>
-              </tr>
-            </thead>
-            <tbody id="previewItems"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="invoice-summary">
-        <p><strong>Tax:</strong> <span id="previewTax"></span></p>
-        <p><strong>Shipping:</strong> <span id="previewShipping"></span></p>
-        <p><strong>Grand Total:</strong> <span id="previewGrandTotal"></span></p>
-      </div>
-
-      <div class="invoice-footer">
-        <p><strong>Payment Method:</strong> <span id="previewPaymentMethod"></span></p>
-        <p><strong>Bank Details:</strong> <span id="previewBank"></span></p>
-        <p><strong>Notes:</strong> <span id="previewNotes"></span></p>
-        <p><strong>Terms:</strong> <span id="previewTerms2"></span></p>
-      </div>
-    </div>
-
-    <!-- Action Buttons -->
     <div class="buttons">
       <button id="downloadBtn">Download PDF</button>
       <button id="clearBtn" class="danger">Clear Invoice</button>
     </div>
+
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>

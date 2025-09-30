@@ -1,175 +1,123 @@
-/* ===== Container ===== */
+/* ===== General ===== */
+body {
+  font-family: 'Arial', sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
 .container {
-  max-width: 1200px;
+  max-width: 900px;
   margin: auto;
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap; /* stack on smaller screens */
 }
 
 /* ===== Form Styling ===== */
 form {
-  flex: 1 1 500px; /* roughly half width */
-  min-width: 300px;
-  box-sizing: border-box;
   background: #fff;
-  padding: 20px;
+  padding: 25px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+form h2 {
+  text-align: center;
+  color: #4f46e5;
+  margin-bottom: 20px;
+}
+
+section {
+  background: #f9fafb;
+  padding: 15px 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+section h3 {
+  color: #1f2937;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 5px;
+}
+
+/* ===== Rows ===== */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+label {
   display: flex;
   flex-direction: column;
-  max-height: 90vh; /* limit height for scroll */
-  overflow-y: auto;
+  margin-bottom: 12px;
+  flex: 1 1 200px;
+  font-weight: 500;
 }
 
-form label {
-  display: block;
-  margin: 10px 0 5px;
+label span {
+  margin-bottom: 5px;
+  color: #374151;
 }
 
-form input, form textarea, form select {
+input, textarea, select {
   width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  transition: all 0.2s ease;
 }
 
-/* Buttons inside form */
-form button {
-  margin-top: 10px;
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 5px rgba(79,70,229,0.2);
 }
 
-/* ===== Items Table in Form ===== */
+/* ===== Table Styling ===== */
 #itemsTableForm {
   width: 100%;
   border-collapse: collapse;
-  margin: 10px 0;
-  overflow-x: auto;
-}
-
-#itemsTableForm th, #itemsTableForm td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-}
-
-/* ===== Invoice Preview Styling ===== */
-.invoice {
-  flex: 1 1 500px;
-  min-width: 300px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  padding: 20px;
-  font-size: 14px;
-  color: #333;
-  overflow-x: auto;
-  max-height: 90vh;
-  overflow-y: auto;
-}
-
-/* Header */
-.invoice-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid #4f46e5;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-}
-
-.invoice-header h1 {
-  color: #4f46e5;
-  font-size: 28px;
-  margin: 0;
-}
-
-.logo {
-  height: 60px;
-  object-fit: contain;
-}
-
-/* Invoice Meta */
-.invoice-meta p {
-  margin: 4px 0;
-}
-
-/* Parties */
-.invoice-parties {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.invoice-parties > div {
-  width: 48%;
-  margin-bottom: 10px;
-}
-
-.invoice-parties h3 {
-  margin-bottom: 6px;
-  color: #4f46e5;
-  font-size: 16px;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 3px;
-}
-
-/* Items Table in Preview */
-.invoice-items table {
-  width: 100%;
-  border-collapse: collapse;
   margin-top: 10px;
 }
 
-.invoice-items th, .invoice-items td {
-  border: 1px solid #ddd;
+#itemsTableForm th, #itemsTableForm td {
+  border: 1px solid #e5e7eb;
   padding: 8px;
   text-align: center;
 }
 
-.invoice-items th {
-  background: #f0f0ff;
-  color: #4f46e5;
-  font-weight: bold;
+#itemsTableForm th {
+  background: #4f46e5;
+  color: white;
+  font-weight: 600;
 }
 
-.invoice-items td {
-  background: #fff;
+#itemsTableForm tr:nth-child(even) {
+  background: #f3f4f6;
 }
 
-/* Summary */
-.invoice-summary {
-  margin-top: 15px;
-  text-align: right;
-  font-weight: bold;
-}
-
-.invoice-summary p {
-  margin: 4px 0;
-}
-
-/* Footer */
-.invoice-footer {
-  margin-top: 20px;
-  border-top: 1px solid #ddd;
-  padding-top: 10px;
+#itemsTableForm input {
+  padding: 4px 6px;
   font-size: 13px;
-}
-
-.invoice-footer p {
-  margin: 2px 0;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
 }
 
 /* ===== Buttons ===== */
 button {
-  padding: 10px 15px;
+  padding: 10px 18px;
   margin-right: 10px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
-  transition: opacity 0.2s;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 button:hover {
@@ -187,25 +135,16 @@ button:hover {
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 900px) {
-  .container {
-    flex-direction: column; /* stack form and preview */
+@media (max-width: 700px) {
+  .row {
+    flex-direction: column;
   }
-}
-
-/* ===== Print (PDF) ===== */
-@media print {
-  body * {
-    visibility: hidden;
+  #itemsTableForm th, #itemsTableForm td {
+    font-size: 12px;
+    padding: 6px;
   }
-  #invoicePreview, #invoicePreview * {
-    visibility: visible;
-  }
-  #invoicePreview {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    page-break-inside: avoid; /* prevents splitting inside invoice */
+  button {
+    font-size: 13px;
+    padding: 8px 14px;
   }
 }
